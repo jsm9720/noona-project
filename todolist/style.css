@@ -23,22 +23,25 @@ body{
 
 .task-tabs div{
     padding: 1em;
+    cursor: pointer;
 }
 
 #under-line{
     height: 4px;
     background-color: pink;
     position: absolute;
-    width: 65px;
+    width: 64px;
     left: 0px;
-    top: 50px;
+    top: 56px;
     padding: 0px;
+    transition: 0.5s;
 }
 
 .task {
     display:flex;
     justify-content: space-between;
     padding: 1em;
+    border: 1px solid lightgray;
 }
 
 .task-done {

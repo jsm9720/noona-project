@@ -7,15 +7,38 @@
 // 3. false이면 안끝난걸로 간주하고 그대로
 // 진행 중 끝남 탭 -> 언더바 이동
 // 각 탭에 맞는 결과 표출
-//
+
+// 슬라이드 넘기기 o
+// 입력 -> 초기화 O
+// 진행중에서 삭제하기 바로 적용 안됨
+// 입력하지 않으면 추가 x(disable or 알람) o
+// Enter 적용 O
+// 디자인
+// 다시 만들기
 
 let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button");
+let tabs = document.querySelectorAll(".task-tabs div");
+let underLine = document.getElementById("under-line");
 let taskList = [];
+let mode = 'all';
+let filterList = [];
 
 addButton.addEventListener("click", addTask);
+taskInput.addEventListener("keydown", (event) => {
+    if (event.keyCode === 13) {
+        addTask(event);
+    }
+});
+
+for(let i=1; i<tabs.length; i++){
+    tabs[i].addEventListener("click", function (event) {filter(event)});
+}
 
 function addTask() {
+    if (taskInput.value === ""){
+        return alert("입력하시오");
+    }
     let task = {
         id: randomIDGenerate(),
         taskContent: taskInput.value,
@@ -23,30 +46,38 @@ function addTask() {
     }
     taskList.push(task);
     console.log(taskList);
+    taskInput.value = "";
     render();
 }
 
 function render() {
+    console.log("render",mode);
+    let list = [];
+    if (mode === "all"){
+        list = taskList;
+    } else {
+        list = filterList;
+    }
     let resultHTML = '';
-    for (let i=0; i<taskList.length; i++){
-        if (taskList[i].isComplete == true){
+    for (let i=0; i<list.length; i++){
+        if (list[i].isComplete == true){
             resultHTML += `<div class="task">
                     <div class="task-done">
-                        ${taskList[i]["taskContent"]}
+                        ${list[i]["taskContent"]}
                     </div>
                     <div class="task-button">
-                        <button onclick="toggleComplete('${taskList[i].id}')"><i class="fa-solid fa-arrows-rotate"></i></button>
-                        <button onclick="deleteTask()"><i class="fa-solid fa-trash"></i></button>
+                        <button onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        <button onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>`
         } else {
             resultHTML += `<div class="task">
                     <div>
-                        ${taskList[i]["taskContent"]}
+                        ${list[i]["taskContent"]}
                     </div>
                     <div class="task-button">
-                        <button onclick="toggleComplete('${taskList[i].id}')"><i class="fa-solid fa-check"></i></button>
-                        <button onclick="deleteTask('${taskList[i].id}')"><i class="fa-solid fa-trash"></i></button>
+                        <button onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-check"></i></button>
+                        <button onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>`
         }
@@ -62,7 +93,7 @@ function toggleComplete(id) {
             break;
         }
     }
-    render();
+    filter();
 }
 
 function deleteTask(id) {
@@ -72,7 +103,35 @@ function deleteTask(id) {
             break;
         }
     }
-    render();
+    filter();
+}
+
+function filter(event){
+    
+    underLine.style.left = event.currentTarget.offsetLeft + "px";
+    underLine.style.width = event.currentTarget.offsetWidth + "px";
+    underLine.style.top = event.currentTarget.offsetTop + event.currentTarget.offsetHeight+ "px";
+
+    mode = event.target.id;
+    console.log("filter",mode);
+    filterList = [];
+    if (mode == "all"){
+        render()
+    } else if (mode == "ongoing"){
+        for (let i=0; i<taskList.length; i++){
+            if (taskList[i].isComplete === false){
+                filterList.push(taskList[i])
+            }
+        }
+        render();
+    } else {
+        for (let i=0; i<taskList.length; i++){
+            if (taskList[i].isComplete === true) {
+                filterList.push(taskList[i])
+            }
+        }
+        render();
+    }
 }
 
 function randomIDGenerate() {
