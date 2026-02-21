@@ -10,7 +10,7 @@
 
 // 슬라이드 넘기기 o
 // 입력 -> 초기화 O
-// 진행중에서 삭제하기 바로 적용 안됨
+// 진행중에서 삭제하기 바로 적용 안됨 o
 // 입력하지 않으면 추가 x(disable or 알람) o
 // Enter 적용 O
 // 디자인
@@ -47,7 +47,7 @@ function addTask() {
     taskList.push(task);
     console.log(taskList);
     taskInput.value = "";
-    render();
+    filter();
 }
 
 function render() {
@@ -61,13 +61,13 @@ function render() {
     let resultHTML = '';
     for (let i=0; i<list.length; i++){
         if (list[i].isComplete == true){
-            resultHTML += `<div class="task">
+            resultHTML += `<div class="task grey">
                     <div class="task-done">
                         ${list[i]["taskContent"]}
                     </div>
-                    <div class="task-button">
-                        <button onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-arrows-rotate"></i></button>
-                        <button onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-trash"></i></button>
+                    <div>
+                        <button onclick="toggleComplete('${list[i].id}')" class="task-button"><i class="fa-solid fa-arrows-rotate blue"></i></button>
+                        <button onclick="deleteTask('${list[i].id}')" class="task-button"><i class="fa-solid fa-trash red"></i></button>
                     </div>
                 </div>`
         } else {
@@ -75,9 +75,9 @@ function render() {
                     <div>
                         ${list[i]["taskContent"]}
                     </div>
-                    <div class="task-button">
-                        <button onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-check"></i></button>
-                        <button onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-trash"></i></button>
+                    <div>
+                        <button onclick="toggleComplete('${list[i].id}')" class="task-button"><i class="fa-solid fa-check check"></i></button>
+                        <button onclick="deleteTask('${list[i].id}')" class="task-button"><i class="fa-solid fa-trash red"></i></button>
                     </div>
                 </div>`
         }
@@ -107,12 +107,12 @@ function deleteTask(id) {
 }
 
 function filter(event){
-    
-    underLine.style.left = event.currentTarget.offsetLeft + "px";
-    underLine.style.width = event.currentTarget.offsetWidth + "px";
-    underLine.style.top = event.currentTarget.offsetTop + event.currentTarget.offsetHeight+ "px";
-
-    mode = event.target.id;
+    if(event){
+        underLine.style.left = event.currentTarget.offsetLeft + "px";
+        underLine.style.width = event.currentTarget.offsetWidth + "px";
+        underLine.style.top = event.currentTarget.offsetTop + event.currentTarget.offsetHeight-4 + "px";
+        mode = event.target.id;
+    }
     console.log("filter",mode);
     filterList = [];
     if (mode == "all"){

@@ -3,22 +3,61 @@ body{
     background-image: url("images/background.png");
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .container {
     background-color: white;
-    min-height: 100vh;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+h1 {
+    margin-bottom: 1.0rem;
+    font-weight: 800;
+}
+
+.input-area{
+    margin-bottom: 1.0rem;
+    display: flex;
+}
+
+.input {
+    padding: 0.5rem;
+    border-width: 0 0 1px;
+    border-bottom-width: 2px;
+    flex-grow: 1;
+}
+
+.input:focus {
+    outline: none;
+}
+
+#add-button {
+    padding: 0.5rem;
+    margin-left: 1rem;
+    border-radius: 0.75rem;
+    background-color: rgb(79 79 79);
+    color: rgb(255 255 255);
+    border: 0px;
+}
+
 .task-area {
-    border: 1px solid lightgray;
+    /* border: 1px solid rgb(129 129 129); */
+    /* border-width: 2px; */
+    margin-bottom: 0.5rem;
 }
 
 .task-tabs {
     display: flex;
-    border-bottom: 1px solid lightgray;
+    border: 1px solid rgb(129 129 129);
+    border-width: 2px;
     position: relative;
+    font-weight: 1000;
+    margin-bottom: 0.5em;
 }
 
 .task-tabs div{
@@ -32,7 +71,7 @@ body{
     position: absolute;
     width: 64px;
     left: 0px;
-    top: 56px;
+    top: 52px;
     padding: 0px;
     transition: 0.5s;
 }
@@ -41,7 +80,11 @@ body{
     display:flex;
     justify-content: space-between;
     padding: 1em;
-    border: 1px solid lightgray;
+    border: 1px solid rgb(129 129 129);
+    border-width: 2px;
+    border-radius: 1rem;
+    margin-bottom: 0.5em;
+    font-weight: 1000;
 }
 
 .task-done {
@@ -49,5 +92,26 @@ body{
 }
 
 .task-button {
+    border: none;
     background-color: white;
+}
+
+.check {
+    color: green;
+}
+
+.blue {
+    color: blue;
+}
+
+.red {
+    color:red;
+}
+
+.grey{
+  background: linear-gradient(
+    to right,
+    lightgray 0%, lightgray 80%,
+    white 80%, white 100%
+  );
 }
