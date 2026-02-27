@@ -18,14 +18,53 @@ function openSearchBox() {
 let newsList = [];
 const getLatestNews = async () => {
   const url = new URL(
-    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?q=한국`,
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?`,
   );
 
   const response = await fetch(url);
   const data = await response.json();
   newsList = data.articles;
-  console.log(" dddd", newsList);
 
+  render();
+};
+const sideMenus = document.querySelectorAll(".side-menu-list button")
+sideMenus.forEach(function (sideMenu){
+  sideMenu.addEventListener("click", sideMenuFunction)
+})
+
+function sideMenuFunction(event){
+  getNewsByCategory(event)
+}
+
+const menus = document.querySelectorAll(".menus button");
+menus.forEach((menu) =>
+  menu.addEventListener("click", (event) => getNewsByCategory(event)),
+);
+
+async function getNewsByCategory(event) {
+  const category = event.target.textContent;
+  const url = new URL(
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?category=${category}`,
+  );
+
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(category);
+
+  newsList = data.articles;
+  render();
+}
+
+const getNewsByKeyword = async () => {
+  const keyword = document.getElementById("search-input").value;
+  const url = new URL(
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?q=${keyword}`,
+  );
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+  newsList = data.articles;
   render();
 };
 
@@ -52,7 +91,7 @@ const render = () => {
           <div class="col-lg-8">
             <h2>${news.title}</h2>
             <p>${summary}</p>
-            <div>${news.source.name || "no source" } * ${moment(news.publishedAt).fromNow()}</div>
+            <div>${news.source.name || "no source"} * ${moment(news.publishedAt).fromNow()}</div>
           </div>
         </div>`;
     })
