@@ -42,9 +42,9 @@ menus.forEach((menu) =>
 );
 
 async function getNewsByCategory(event) {
-  const category = event.target.textContent;
+  const category = event.target.textContent.toLowerCase()
   const url = new URL(
-    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?category=${category}`,
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?category=${category}`
   );
 
   const response = await fetch(url);
