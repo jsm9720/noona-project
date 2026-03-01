@@ -99,3 +99,12 @@ body{
 #input-area {
     display: none;
 }
+
+.page-link {
+    color:rgb(255, 173, 73);
+    border: 1px solid gray;
+}
+
+.pagination {
+    margin-top: 10px
+}

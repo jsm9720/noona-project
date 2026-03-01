@@ -35,7 +35,7 @@ let url = new URL(
 
 let totalResults = 0;
 let page = 1;
-const pageSize = 10;
+const pageSize = 11;
 const groupSize = 5;
 
 let getNews = async () => {
@@ -135,8 +135,13 @@ const paginationRender = () => {
   if (lastPage > totalPages) {
     lastPage = totalPages;
   }
-  const firstPage =
+
+  let firstPage =
     lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
+
+  if (lastPage === totalPages && lastPage - (groupSize - 1) > 0){
+    firstPage = totalPages - groupSize + 1
+  }
 
   let paginationHTML = ``
   if (page !== 1) {
